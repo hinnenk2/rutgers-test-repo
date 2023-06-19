@@ -6,18 +6,12 @@ async function logout(event) {
       headers: { 'Content-Type': 'application/json' }
     });
 
-  
     if (response.ok) {
-      //console.log("response of function log out good")
-      alert("Logging you out")
-     // document.location.replace('/login');
-      document.location.replace('/');
+      alert("Logging out...")
+
+      document.location.replace('/');   //redirects user to home page after successful logout
     } else {
-      //console.log("response of function log out bad")
-      //document.location.replace('/');
-      //document.location.replace('/login');
-      alert("You are already logged out")
-      //alert(response.statusText);
+      alert("You are logged out")
     }
   }
   

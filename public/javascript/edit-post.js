@@ -1,16 +1,14 @@
 async function editFormHandler(event) {
     event.preventDefault();
 
-  
-    const title = document.querySelector('input[name="post-title"]').value;
+    const title = document.querySelector('input[name="post-title"]').value.trim();
     const id = window.location.toString().split('/')[
       window.location.toString().split('/').length - 1
     ];
 
     const contents = document.querySelector('textarea[name="post-contents"]').value.trim();
 
-    if (title !== "" && contents !== "") {
-
+    if (title !== "" && contents !== "") {    //if the comment to be editted already exits (has title and contents) then proceed with editting
         const response = await fetch(`/api/posts/${id}`, {
           method: 'PUT',
           body: JSON.stringify({
@@ -23,24 +21,21 @@ async function editFormHandler(event) {
         });
 
         if (response.ok) {
-          document.location.replace('/dashboard/');
+          document.location.replace('/dashboard/'); //redirects user to dashboard to confirm that comment was updated
         } else {
-          alert(response.statusText);
+          alert(response.statusText); //no alert needed
         }
     } else {
-
-        if (title === "" && contents === "") {
-          alert("Please enter a title and description, then submit")
+        if (title === "" && contents === "") {    //alerts user to update comment by populating the appropriate fields
+          alert("Enter a title and description")
         } else if (title === "") {
-          alert("Please enter a title, then submit")
+          alert("Enter a title")
         } else if (contents === "") {
-          alert("Please enter a description, then submit")
+          alert("Enter a description")
         } else {
-          // Do nothing
         }
-      
     }
-  
 }
+
   document.querySelector('.edit-post-form').addEventListener('submit', editFormHandler);
   

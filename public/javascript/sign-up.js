@@ -4,11 +4,10 @@ async function signupFormHandler(event) {
   const username = document.querySelector('#username-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
 
-
-  if (username !== "" && password !== "") {
+  if (username !== "" && password !== "") {   //if username and pw are populated
     
-  if (username && password) {
-      const response = await fetch('/api/users', {
+  if (username && password) {           //if username and pw are valid
+      const response = await fetch('/api/users', {    //access user-routes
         method: 'post',
         body: JSON.stringify({
           username,
@@ -16,49 +15,24 @@ async function signupFormHandler(event) {
         }),
         headers: { 'Content-Type': 'application/json' }
       });
-     // console.log(response);.
-         // check the response status
+
       if (response.ok) {
-          //console.log(`this is the response ${response}`)
-          
-          console.log('success');
-          document.location.replace('/');
+          document.location.replace('/');   //redirects user to homepage upon successful signup
       } else {
           alert(response.statusText);
       }
     }
+    
   } else {
-
-    if (username === "" && password === "") {
-      alert("Please enter a username and password, then submit")
+    if (username === "" && password === "") {   //alerts user if username and/or pw fields are left empty during signup
+      alert("Enter a username and password")
     } else if (username === "") {
-      alert("Please enter a username, then submit")
+      alert("Enter a username")
     } else if (password === "") {
-      alert("Please enter a password, then submit")
+      alert("Enter a password")
     } else {
-      // Do nothing
     }
-
   }
-
-  // if (username && email && password) {
-  //     await fetch('/api/users', {
-  //       method: 'post',
-  //       body: JSON.stringify({
-  //         /*this is what stringify is translating the data into.
-  //          {username: "esroleo", email: "esroleo@gmail.com", password: "test"}
-  //         email: "esroleo@gmail.com"
-  //         password: "test"
-  //         username: "esroleo"
-  //         */
-  //         username,
-  //         email,
-  //         password
-  //       }),
-  //       headers: { 'Content-Type': 'application/json' }
-  //     }).then((response) => {console.log(response)})
-  //   }
-
 }
 
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);

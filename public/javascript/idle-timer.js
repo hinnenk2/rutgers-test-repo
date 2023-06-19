@@ -1,43 +1,32 @@
-// Once the server start we will monitor for 
-
-
-
 function idleLogout() {
-    var timmer;
-    window.onload = resetTimer;
+    var timer;
+    window.onload = resetTimer;     //user stays logged in based on event activity
     window.onmousemove = resetTimer;
-    window.onmousedown = resetTimer;  // catches touchscreen presses as well      
-    window.ontouchstart = resetTimer; // catches touchscreen swipes as well 
-    window.onclick = resetTimer;      // catches touchpad clicks as well
+    window.onmousedown = resetTimer;      
+    window.onclick = resetTimer;      
     window.onkeydown = resetTimer;   
-    window.addEventListener('scroll', resetTimer, true); // 
+    window.addEventListener('scroll', resetTimer, true); //keeps user logged in as long as they show activity (scrolling, clicking, typing)
   
     async function logout() {
-
-        alert("You have been idle for 5 minutes, logging you out.")
+        alert("Idle activity for 10 minutes, logging out...") //alerts user of logout due to inactivity
 
         const response = await fetch('/api/users/logout', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' }
           });
-      
         
           if (response.ok) {
-            //console.log("response of function log out good")
-            alert("Logging you out")
-            document.location.replace('/');
+            alert("Logging out...")
+            document.location.replace('/'); //redirects user to Home page after logout
           } else {
-            alert("You are already logged out")
-
+            alert("You have already been logged out")
           }
-
-          
-   
     }
   
     function resetTimer() {
-        clearTimeout(timmer);
-        timmer = setTimeout(logout, 300000);  // will automatically log you out in 5 minutes.
+        clearTimeout(timer);
+        timer = setTimeout(logout, 600000);  // will automatically log out in 10 minutes (600,000 milliseconds)
     }
   }
+  
   idleLogout();

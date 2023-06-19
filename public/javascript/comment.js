@@ -7,8 +7,7 @@ async function commentFormHandler(event) {
       window.location.toString().split('/').length - 1
     ];
   
-    //console.log(comment_text, post_id);
-    if (comment_text) {
+    if (comment_text) {               //regulates the user's comment posts by converting them into JSON strings pior to posting
         const response = await fetch('/api/comments', {
           method: 'POST',
           body: JSON.stringify({
@@ -26,7 +25,7 @@ async function commentFormHandler(event) {
           alert(response.statusText);
         }
       } else {
-          alert("Please enter a comment and then submit")
+          alert("Enter a comment")    //alerts user if a comment was not entered in the proper field
       }
   }
   

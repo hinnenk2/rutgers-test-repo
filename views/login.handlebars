@@ -1,28 +1,20 @@
 <form class="login-form">
     <div>
-        <label for="username-login">username:</label>
+        <label for="username-login">Username:</label>
         <input type="text" id="username-login" />
     </div>
     <div>
-        <label for="password-login">password:</label>
+        <label for="password-login">Password:</label>
         <input type="password" id="password-login" />
     </div>
     <div class="wrapper">
         <button class="btn btn-primary btn-lg" type="submit">Login!</button>
     </div>
-
 </form>
 
 <br>
-
     <div class="wrapper">
-       <button onclick="window.location.href='/signUp'" type="submit" class="btn btn-success btn-lg">Sign up instead!</button>
+       <button onclick="window.location.href='/signUp'" type="submit" class="btn btn-success btn-lg">Sign Up!</button>
     </div>
 
-
-
-<!-- Only added to this handlebar as is where the logic is required for logging in -->
-<!-- Absolute path requiered in back end as js code is not to be sent to the client -->
-<script src="/javascript/login.js"></script>
-
-
+<script src="/javascript/login.js"></script>    <!-- Required for user authentication/logging in -->

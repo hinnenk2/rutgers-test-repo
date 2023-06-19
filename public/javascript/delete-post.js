@@ -9,9 +9,9 @@ async function deleteFormHandler(event) {
     });
   
     if (response.ok) {
-      document.location.replace('/dashboard/');
+      document.location.replace('/dashboard/');  //redirects user to dashboard to confirm that their comment was deleted.
     } else {
-      alert(response.statusText);
+      alert(response.statusText);   //no alert needed
     }
   }
   

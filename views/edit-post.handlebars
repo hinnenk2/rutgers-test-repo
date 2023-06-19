@@ -1,26 +1,24 @@
 <article>
-  <a href="/dashboard"> &larr; Back to dashboard</a>
+  <a href="/dashboard"> &larr; Dashboard</a>
   <h2>
     Edit Post
   </h2>
   <form class="edit-post-form">
     <div>
-      <label for="post-title">Update Title</label>
+      <label for="post-title">Edit Title</label>
       <input name="post-title" type="text" value="{{post.title}}" />
     </div>
     <br>
     <div>
 
-      <label for="post-contents">Update Contents</label>
+      <label for="post-contents">Edit Contents</label>
       <textarea name="post-contents">{{post.contents}}</textarea>     
     </div>
-    <button type="submit">Save post</button>
-    <button type="button" class="delete-post-btn">Delete post</button>
+    <button type="submit">Save Comment</button>
+    <button type="button" class="delete-post-btn">Delete Comment</button>
   </form>
 </article>
 
-
-<!-- Partial comments -->
 {{> comments post.comments}}
 
 <script src="/javascript/edit-post.js"></script>

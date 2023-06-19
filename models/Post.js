@@ -1,12 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-// create our Post model
-class Post extends Model {}
+class Post extends Model {}   //create post model for user's to add/edit comments
 
 Post.init(
     {
-      id: {
+      id: {   //required in index.js for object relationship
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -20,9 +19,6 @@ Post.init(
       contents: {
         type: DataTypes.STRING,
         allowNull: false
-        // validate: {
-        //   isURL: true
-        // }
       },
       user_id: {
         type: DataTypes.INTEGER,

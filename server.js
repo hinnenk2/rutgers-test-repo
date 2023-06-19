@@ -1,60 +1,21 @@
-// *** Start of Import Express library require *** //
-const express = require('express');
-// *** End of Import Express library require *** //
-
-// *** Start of Import Path libraries *** //
+const express = require('express'); //import express
 const path = require('path');
-// *** End of Import Path libraries *** //
+const routes = require('./controllers'); //set up routes for middleware
+const sequelize = require('./config/connection');  //import sequelize
+const helpers = require('./utils/helpers'); //helper functions for page display
 
-// *** Start of routes middleware for controller routes *** //
-const routes = require('./controllers');
-// *** End of routes middleware for controller routes *** //
-
-// *** Start of Import Sequelize library require *** //
-const sequelize = require('./config/connection');
-// *** End of Import Sequelize library require *** //
-
-// Helper functions
-const helpers = require('./utils/helpers');
-
-// *** Start of Import Handlebars library require *** // 
-// Used to add back the concept of layout, partials and others.
-const exphbs = require('express-handlebars');
-//const hbs = exphbs.create({ helpers }); 
+const exphbs = require('express-handlebars');   //allows handlesbars to act as the view engine
 const hbs = exphbs.create({helpers}); 
-// *** End of Import Handlebars library require *** // 
 
+const session = require('express-session');   //imports middleware that assigns a unique session to each user for the purpose of storing data and authentication
+const SequelizeStore = require('connect-session-sequelize')(session.Store);   //provides apps with a storage element for each user session.
 
-// *** Start of express session store *** //
-/* Description of express-session
-The express-session package is an Express.js middleware 
-that uses sessions, a mechanism that helps applications
-to determine whether multiple requests came from the same
-client. Developers may assign every user a unique session 
-so that their application can store the user state, and thus
-authenticate users."
- */
-const session = require('express-session');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-/* Description of connect session sequelize
-"The connect-session-sequelize package  provides applications with a
-scalable store for sessions. The express-session package’s default
-server-side session storage, MemoryStore, is purposely not designed
-for a production environment, will leak memory under most conditions,
-doesn’t scale past a single process, and is only meant for debugging
-and developing. The connect-session-sequelize package resolves these
-issues and is compatible with the Sequelize ORM."
-*/
-// *** End of express session store *** //
-
-// *** Initiate Express *** //
-const app = express();
-// Port start node js with express listening port
+const app = express();  //initiate express
 const PORT = process.env.PORT || 3001;
 
-// *** Start of init express session cookies pass ***
+// set up express-session with cookies
 const sess = {
-    secret: 'Super secret secret',
+    secret: 'secret',
     cookie: {},
     resave: false,
     saveUninitialized: true,
@@ -62,29 +23,18 @@ const sess = {
       db: sequelize
     })
   };
-// *** End of init express session cookies pass ***
 
+app.use(session(sess));   //middleware for database connection
 
-// express. use express sessions which is connected to our database.
-app.use(session(sess));
-
-// handlebars init
-app.engine('handlebars', hbs.engine);
+app.engine('handlebars', hbs.engine);   //initiate handlebars as the run engine for display
 app.set('view engine', 'handlebars');
 
-// express sessions to handle fetch as json
-app.use(express.json());
+app.use(express.json());    //required for fetch request
 app.use(express.urlencoded({ extended: true }));
-// express usage of public path which will have access to all js scriptst here
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));    //allows access to js scripts in public folder
 
+app.use(routes);    //allows access to controllers directory and its subsequent routes for page
 
-// turn on express routes
-app.use(routes);
-
-// User sequelize to create models if any and then initalize listenting express node.js
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
+    app.listen(PORT, () => console.log('Now listening on PORT: ' + PORT));
   });
-
-
