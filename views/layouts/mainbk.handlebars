@@ -21,11 +21,11 @@
           </nav>
           <nav>
             {{#if loggedIn}}
-            <a href="/">Home</a>
+            <a href="/">Homepage</a>
             <a href="/dashboard">Dashboard</a>
             <button id="logout" class="btn-no-style">Logout</button>
             {{else}}
-            <a href="/">Home</a>
+            <a href="/">Homepage</a>
             <a href="/dashboard">Dashboard</a>
             <a href="/login">Login</a>
             {{/if}}
@@ -44,7 +44,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     {{#if loggedIn}}
     <script src="/javascript/logout.js"></script>
-    <script src="/javascript/idle-timer.js"></script>
+    <script src="/javascript/idletimer.js"></script>
     {{/if}}
 
   </body>

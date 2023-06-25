@@ -1,11 +1,8 @@
 const router = require('express').Router();
+const userRoutes = require('./userroute.js'); //setup for middleware
+const postRoutes = require('./postroute');    //setup for middleware
+const commentRoutes = require('./commentroute');  //setup for middleware
 
-const userRoutes = require('./user-routes.js');
-const postRoutes = require('./post-routes');
-const commentRoutes = require('./comment-routes');
-
-
-//router.use('/users', userRoutes);
 router.use('/users', userRoutes);
 router.use('/posts', postRoutes);
 router.use('/comments', commentRoutes);

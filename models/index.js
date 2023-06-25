@@ -2,34 +2,27 @@ const User = require('./User');
 const Post = require('./Post');
 const Comment = require('./Comment');
 
-// One to many relationships
-User.hasMany(Post, {
+User.hasMany(Post, {        //User can have many posts
     foreignKey: 'user_id'
   });
 
-// One to one relationship
-Post.belongsTo(User, {
+Post.belongsTo(User, {      //A post can only belong to a single user that started the post
     foreignKey: 'user_id',
 });
 
-// One to one relationship
-Comment.belongsTo(User, {
+Comment.belongsTo(User, {   //Each comment belongs to its respective user
     foreignKey: 'user_id',
 });
 
-// One to one relationship
-Comment.belongsTo(Post, {
+Comment.belongsTo(Post, {   //Each comment belngs to its respective post
     foreignKey: 'post_id', 
 });
 
-// One to many relationships
-User.hasMany(Comment, {
+User.hasMany(Comment, {     //A user can have many comments
     foreignKey: 'user_id',
-    
   });
 
-// One to many relationships
-Post.hasMany(Comment, {
+Post.hasMany(Comment, {     //A post can have many follow-up comments
     foreignKey: 'post_id'
 });
 

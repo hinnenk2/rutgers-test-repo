@@ -5,41 +5,28 @@ class Comment extends Model {}
 
 Comment.init(
   {
-    // columns will go here
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
-
-        /*
-              created_at as an argument-->
-      {{user.username}} on {{format_date created_at}}
-    </div>
-    <div class="text">
-      {{comment_text}}
-        */
     },
     comment_text: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [1]
+            len: [1]    //comment character count must be at least 1.
         }
     },
-    user_id: {
+    user_id: {     //associates the comment with the user via index.js
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { // you need to do model associations after
-            // e.g
-            /*
-            Check index.js
-            */
-            model: 'user', // what table is coming from
-            key: 'id' // what column is going to be used
+        references: { 
+            model: 'user',
+            key: 'id' 
         }
     },
-    post_id: {
+    post_id: {    //associates the comment with the post
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {

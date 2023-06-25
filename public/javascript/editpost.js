@@ -23,7 +23,7 @@ async function editFormHandler(event) {
         if (response.ok) {
           document.location.replace('/dashboard/'); //redirects user to dashboard to confirm that comment was updated
         } else {
-          alert(response.statusText); //no alert needed
+          alert(response.statusText); //no message needed
         }
     } else {
         if (title === "" && contents === "") {    //alerts user to update comment by populating the appropriate fields
@@ -37,5 +37,5 @@ async function editFormHandler(event) {
     }
 }
 
-  document.querySelector('.edit-post-form').addEventListener('submit', editFormHandler);
+  document.querySelector('.editpost-form').addEventListener('submit', editFormHandler);
   

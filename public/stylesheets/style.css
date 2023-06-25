@@ -108,11 +108,11 @@ main {
   color: #2a73cc;
 }
 
-.delete-post-btn {
+.deletepost-btn {
   background-color: #e41616;
 }
 
-.delete-post-btn:hover {
+.deletepost-btn:hover {
   background-color: #c85d42;
 }
 
@@ -172,7 +172,7 @@ main {
   width: 100%;
 }
 
-.edit-post-form {
+.editpost-form {
   margin-bottom: 4%;
 }
 

@@ -1,25 +1,18 @@
 const router = require('express').Router();
-// Imported to model (tables) which are post and user tables.
 const { Post, User, Comment } = require('../../models');
-//To do calculations
 const sequelize = require('../../config/connection');
 const withAuth = require('../../utils/auth');
 
-router.get('/', (req, res) => {
-    console.log('======================');
+router.get('/', (req, res) => {   //displays all user posts on homepage in order of creation date
     Post.findAll({
-      // Query configuration
       order: [['created_at', 'DESC']], 
       attributes: [
         'id',
         'title',
         'contents',
         'created_at'
-        //[sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
-      
-      // to return everything  include:[User]
-      include: [
+      include: [    //display the post's comments and their respective users
         {
           model: Comment,
           attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
@@ -34,17 +27,15 @@ router.get('/', (req, res) => {
         }
       ]
     })
-    .then(dbPostData => res.json(dbPostData))
+    .then(dbPostData => res.json(dbPostData)) //display all data if valid.
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });
-  
   });
 
-
   // select x,y from post where x or y
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res) => {    //display posts and their user & comments by other users
     Post.findOne({
         where: {
         id: req.params.id
@@ -54,7 +45,6 @@ router.get('/:id', (req, res) => {
           'title',
           'contents',
           'created_at'
-         // [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         include: [
           {
@@ -73,7 +63,7 @@ router.get('/:id', (req, res) => {
     })
         .then(dbPostData => {
         if (!dbPostData) {
-            res.status(404).json({ message: 'No post found with this id' });
+            res.status(404).json({ message: 'Invalid post' });
             return;
         }
         res.json(dbPostData);
@@ -84,27 +74,20 @@ router.get('/:id', (req, res) => {
         });
 });
 
-
-
-  // Insert record
-router.post('/',  withAuth, (req, res) => {
-    // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+router.post('/',  withAuth, (req, res) => { //for user to add new posts
     Post.create({
       title: req.body.title,
       contents: req.body.contents,
-      // insomina test will use  user_id: req.body.user_id
-      // ussing session ID
       user_id: req.session.user_id
     })
-      .then(dbPostData => res.json(dbPostData))
+      .then(dbPostData => res.json(dbPostData))   //stores post if inputs are valid
       .catch(err => {
         console.log(err);
         res.status(500).json(err);
       });
   });
 
-  // Update record
-router.put('/:id', withAuth,  (req, res) => {
+router.put('/:id', withAuth,  (req, res) => {   //put requests are for updating a comment's title or contents
     Post.update(
         {
         title: req.body.title,
@@ -118,7 +101,7 @@ router.put('/:id', withAuth,  (req, res) => {
     )
         .then(dbPostData => {
         if (!dbPostData) {
-            res.status(404).json({ message: 'No post found with this id' });
+            res.status(404).json({ message: 'Invalid post' });
             return;
         }
         res.json(dbPostData);
@@ -129,9 +112,7 @@ router.put('/:id', withAuth,  (req, res) => {
         });
 });
 
-
-// Delete Record
-router.delete('/:id', withAuth,  (req, res) => {
+router.delete('/:id', withAuth,  (req, res) => {  //delete request for deleting from the database
     Post.destroy({
         where: {
         id: req.params.id
@@ -139,17 +120,15 @@ router.delete('/:id', withAuth,  (req, res) => {
     })
     .then(dbPostData => {
       if (!dbPostData) {
-          res.status(404).json({ message: 'No post found with this id' });
+          res.status(404).json({ message: 'Invalid post' });
           return;
       }
-      res.json(dbPostData);
+      res.json(dbPostData); //should yield an empty array
       })
       .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });
 });
-
-
 
 module.exports = router;

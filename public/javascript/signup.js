@@ -7,7 +7,7 @@ async function signupFormHandler(event) {
   if (username !== "" && password !== "") {   //if username and pw are populated
     
   if (username && password) {           //if username and pw are valid
-      const response = await fetch('/api/users', {    //access user-routes
+      const response = await fetch('/api/users', {    //access userroute
         method: 'post',
         body: JSON.stringify({
           username,

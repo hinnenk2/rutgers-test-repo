@@ -5,7 +5,7 @@ class Post extends Model {}   //create post model for user's to add/edit comment
 
 Post.init(
     {
-      id: {   //required in index.js for object relationship
+      id: {   //required in index.js for associating each Post with the input Comment.
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -23,15 +23,13 @@ Post.init(
       user_id: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'user',//joing user Model on id column
-          // association is still required at index.js of models
+          model: 'user',    //required for associating each Post to its User in index.js
           key: 'id'
         }
       }
     },
     {
       sequelize,
-      // what each of these metadata means?
       freezeTableName: true,
       underscored: true,
       modelName: 'post'

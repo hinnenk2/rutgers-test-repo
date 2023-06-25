@@ -1,12 +1,9 @@
 const router = require('express').Router();
-const sequelize = require('../config/connection');
-const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
+const { Post, User, Comment } = require('../models');
+const sequelize = require('../config/connection');
 
-// get all posts for dashboard6
-router.get('/', withAuth, (req, res) => {
-  console.log(req.session);
-  console.log('======================');
+router.get('/', withAuth, (req, res) => {   //displays all posts on the dashboard along with their respective comments/users.
   Post.findAll({
     where: {
       user_id: req.session.user_id
@@ -16,7 +13,6 @@ router.get('/', withAuth, (req, res) => {
       'title',
       'contents',
       'created_at'
-      //[sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
     ],
     include: [
       {
@@ -36,7 +32,7 @@ router.get('/', withAuth, (req, res) => {
     
   })
     .then(dbPostData => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
+      const posts = dbPostData.map(post => post.get({ plain: true }));    //renders posts to the dashboard similar to the homepage.
       res.render('dashboard', { posts, loggedIn: true });
     })
     .catch(err => {
@@ -45,10 +41,7 @@ router.get('/', withAuth, (req, res) => {
     });
 });
 
-// get all posts for dashboard6
-router.get('/full', withAuth, (req, res) => {
-    console.log(req.session);
-    console.log('======================');
+router.get('/full', withAuth, (req, res) => {   //display all posts onto the dashboard similar to homepage
     Post.findAll({
       where: {
         user_id: req.session.user_id
@@ -58,7 +51,6 @@ router.get('/full', withAuth, (req, res) => {
         'title',
         'contents',
         'created_at'
-        //[sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
       ],
       include: [
         {
@@ -77,7 +69,7 @@ router.get('/full', withAuth, (req, res) => {
     })
       .then(dbPostData => {
         const posts = dbPostData.map(post => post.get({ plain: true }));
-        res.render('dashboard-full', { posts, loggedIn: true });
+        res.render('dashboardfull', { posts, loggedIn: true });
       })
       .catch(err => {
         console.log(err);
@@ -85,16 +77,14 @@ router.get('/full', withAuth, (req, res) => {
       });
   });
   
-
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', (req, res) => {   //select posts to edit through their unique id if the post exists.
   Post.findByPk(req.params.id, {
     attributes: [
       'id',
       'title',
       'contents',
       'created_at'
-      //[sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-    ],
+       ],
     include: [
       {
         model: Comment,
@@ -114,7 +104,7 @@ router.get('/edit/:id', (req, res) => {
       if (dbPostData) {
         const post = dbPostData.get({ plain: true });
         
-        res.render('edit-post', {
+        res.render('editpost', {   //renders the edit page if user is logged in
           post,
           loggedIn: true
         });

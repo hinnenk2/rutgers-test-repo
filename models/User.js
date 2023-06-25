@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');   //import bcrypt
+const bcrypt = require('bcrypt');   //import bcrypt for password encryption
 
-const { Model, DataTypes } = require('sequelize');   //All database tables require sequelize
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');   //sequelize requires connection access using mysql data 
 
 class User extends Model {    
@@ -35,7 +35,6 @@ User.init(
               newUserData.password = await bcrypt.hash(newUserData.password, 10); //hashs user's pw with salt value of 10
               return newUserData;
             },
-            // set up beforeUpdate lifecycle "hook" functionality
             async beforeUpdate(updatedUserData) {
                 updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10); //rehashes the pw
                 return updatedUserData;

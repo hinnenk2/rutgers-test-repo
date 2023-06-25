@@ -3,7 +3,7 @@
   <h2>
     Edit Post
   </h2>
-  <form class="edit-post-form">
+  <form class="editpost-form">
     <div>
       <label for="post-title">Edit Title</label>
       <input name="post-title" type="text" value="{{post.title}}" />
@@ -15,11 +15,11 @@
       <textarea name="post-contents">{{post.contents}}</textarea>     
     </div>
     <button type="submit">Save Comment</button>
-    <button type="button" class="delete-post-btn">Delete Comment</button>
+    <button type="button" class="deletepost-btn">Delete Comment</button>
   </form>
 </article>
 
 {{> comments post.comments}}
 
-<script src="/javascript/edit-post.js"></script>
-<script src="/javascript/delete-post.js"></script>
+<script src="/javascript/editpost.js"></script>
+<script src="/javascript/deletepost.js"></script>
