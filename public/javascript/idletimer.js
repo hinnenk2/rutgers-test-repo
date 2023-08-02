@@ -1,5 +1,5 @@
 function idleLogout() {
-    var timer;
+    let timer;
     window.onload = resetTimer;     //user stays logged in based on event activity
     window.onmousemove = resetTimer;
     window.onmousedown = resetTimer;      

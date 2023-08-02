@@ -15,7 +15,7 @@ Comment.init(
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [1]    //comment character count must be at least 1.
+            len: [1]    //character count for leaving comments must be at least 1.
         }
     },
     user_id: {     //associates the comment with the user via index.js
